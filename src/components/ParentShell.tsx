@@ -1,8 +1,14 @@
+import { useEffect } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
+import { appLoginUrl, getMarketingOrigin } from '../lib/site'
 
 export function ParentShell() {
   const { profile, signOut } = useAuth()
+
+  useEffect(() => {
+    document.title = 'Waka Parent Portal'
+  }, [])
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -35,6 +41,16 @@ export function ParentShell() {
           <Outlet />
         </main>
       </div>
+      <p className="mt-6 text-center text-[10px] text-slate-400">
+        Staff?{' '}
+        <a href={appLoginUrl()} className="text-emerald-700 hover:underline dark:text-emerald-400">
+          Open the school app
+        </a>
+        {' · '}
+        <a href={getMarketingOrigin()} className="hover:underline" rel="noreferrer">
+          wakaschool.org
+        </a>
+      </p>
     </div>
   )
 }

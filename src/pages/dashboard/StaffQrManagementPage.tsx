@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { listTeachersWithQrTokens, rotateTeacherQrToken } from '../../lib/data-service'
 import { useAuth } from '../../lib/auth'
 import { ErpToolbar } from '../../components/ErpToolbar'
+import { getAppOrigin } from '../../lib/site'
 
 export function StaffQrManagementPage() {
   const { profile } = useAuth()
@@ -60,7 +61,7 @@ export function StaffQrManagementPage() {
           </thead>
           <tbody>
             {rows.map((r) => {
-              const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/kiosk/staff?t=${r.secret_token}`
+              const url = `${getAppOrigin()}/kiosk/staff?t=${r.secret_token}`
               const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(url)}`
               return (
                 <tr key={r.id} className="border-b border-slate-100 dark:border-slate-900">

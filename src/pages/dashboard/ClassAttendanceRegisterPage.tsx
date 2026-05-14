@@ -10,6 +10,7 @@ import {
 } from '../../lib/data-service'
 import { useAuth } from '../../lib/auth'
 import { ErpToolbar } from '../../components/ErpToolbar'
+import { getAppOrigin } from '../../lib/site'
 import clsx from 'clsx'
 
 const statuses: StudentAttendanceStatus[] = ['present', 'absent', 'sick', 'late', 'excused']
@@ -131,12 +132,7 @@ export function ClassAttendanceRegisterPage() {
     setMarks(next)
   }
 
-  const shareUrl =
-    publicToken && typeof window !== 'undefined'
-      ? `${window.location.origin}/dashboard/attendance/register?token=${publicToken}`
-      : publicToken
-        ? `?token=${publicToken}`
-        : ''
+  const shareUrl = publicToken ? `${getAppOrigin()}/dashboard/attendance/register?token=${publicToken}` : ''
 
   return (
     <section className="space-y-4">

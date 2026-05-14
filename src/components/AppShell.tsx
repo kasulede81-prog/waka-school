@@ -1,13 +1,18 @@
-import { useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../lib/auth'
 import { filterNavSections } from '../config/navigation'
+import { getMarketingOrigin } from '../lib/site'
 
 export function AppShell() {
   const { profile, signOut, permissions } = useAuth()
   const navigate = useNavigate()
   const [q, setQ] = useState('')
   const navSections = useMemo(() => filterNavSections(profile, permissions), [profile, permissions])
+
+  useEffect(() => {
+    document.title = 'Waka School ERP'
+  }, [])
 
   function submitSearch(e: FormEvent) {
     e.preventDefault()
@@ -70,6 +75,11 @@ export function AppShell() {
           <Outlet />
         </main>
       </div>
+      <footer className="mx-auto mt-4 hidden max-w-[1400px] px-4 text-center text-[10px] text-slate-400 md:block">
+        <a href={getMarketingOrigin()} className="hover:underline" rel="noreferrer">
+          wakaschool.org
+        </a>
+      </footer>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase, isSupabaseConfigured } from './supabase'
 import type { Role } from '../types'
+import { emailConfirmationRedirectUrl, passwordResetRedirectUrl } from './site'
 
 interface Profile {
   id: string
@@ -139,6 +140,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: payload.email,
       password: payload.password,
       options: {
+        emailRedirectTo: emailConfirmationRedirectUrl(),
         data: {
           full_name: payload.fullName,
           school_name: payload.schoolName,
@@ -155,7 +157,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { error: 'Supabase environment variables are missing.' }
     }
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
+      redirectTo: passwordResetRedirectUrl(),
     })
     return { error: error?.message }
   }

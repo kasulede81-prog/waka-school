@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import type { Role } from '../types'
 import { useAuth } from '../lib/auth'
+import { getSiteKind, redirectToParentHome, redirectToStaffApp } from '../lib/site'
 
 interface Props {
   allowedRoles?: Role[]
@@ -17,13 +18,31 @@ export function ProtectedRoute({ allowedRoles, requiredPermissions, denyRoles }:
   if (!user) return <Navigate to="/auth/login" replace state={{ from: location.pathname }} />
 
   if (denyRoles && profile && denyRoles.includes(profile.role)) {
-    return <Navigate to={profile.role === 'parent' ? '/portal' : '/dashboard'} replace />
+    if (profile.role === 'parent') {
+      if (getSiteKind() === 'app') {
+        redirectToParentHome()
+        return <div className="p-6 text-sm text-slate-600">Opening parent portal…</div>
+      }
+      return <Navigate to="/portal" replace />
+    }
+    return <Navigate to="/dashboard" replace />
   }
 
   if (allowedRoles) {
     if (!profile) return <Navigate to="/dashboard" replace />
     if (!allowedRoles.includes(profile.role)) {
-      return <Navigate to={profile.role === 'parent' ? '/portal' : '/dashboard'} replace />
+      if (profile.role === 'parent') {
+        if (getSiteKind() === 'app') {
+          redirectToParentHome()
+          return <div className="p-6 text-sm text-slate-600">Opening parent portal…</div>
+        }
+        return <Navigate to="/portal" replace />
+      }
+      if (getSiteKind() === 'portal') {
+        redirectToStaffApp('/dashboard')
+        return <div className="p-6 text-sm text-slate-600">Opening school app…</div>
+      }
+      return <Navigate to="/dashboard" replace />
     }
   }
 
