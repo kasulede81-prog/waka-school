@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { BrandLogoLockup } from './BrandLogo'
 import { useAuth } from '../lib/auth'
 import { filterNavSections } from '../config/navigation'
 import { getMarketingOrigin } from '../lib/site'
@@ -25,8 +26,8 @@ export function AppShell() {
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3">
-          <Link to="/dashboard" className="text-lg font-bold text-emerald-700 dark:text-emerald-400">
-            Waka School
+          <Link to="/dashboard" className="shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 rounded-md">
+            <BrandLogoLockup layout="inline" />
           </Link>
           <form onSubmit={submitSearch} className="flex max-w-md flex-1 items-center gap-2">
             <input

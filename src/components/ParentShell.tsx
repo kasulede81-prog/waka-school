@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
+import { BrandLogoLockup } from './BrandLogo'
 import { useAuth } from '../lib/auth'
 import { appLoginUrl, getMarketingOrigin } from '../lib/site'
 
@@ -14,8 +15,8 @@ export function ParentShell() {
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
         <div className="mx-auto flex w-full max-w-4xl items-center justify-between">
-          <Link to="/portal" className="text-lg font-bold text-emerald-700 dark:text-emerald-400">
-            Waka Parent
+          <Link to="/portal" className="shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 rounded-md">
+            <BrandLogoLockup layout="inline" sublabel="Parent Portal" />
           </Link>
           <div className="flex items-center gap-3">
             <span className="hidden text-xs text-slate-500 sm:inline">{profile?.full_name}</span>

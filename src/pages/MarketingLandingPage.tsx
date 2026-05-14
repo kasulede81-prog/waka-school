@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { BrandLogoLockup } from '../components/BrandLogo'
 import { appLoginUrl, appSignupUrl, getMarketingOrigin, portalLoginUrl } from '../lib/site'
 
 const DESCRIPTION =
@@ -27,9 +28,19 @@ export function MarketingLandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
       <header className="border-b border-slate-800/80 bg-slate-950/70 px-4 py-4 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
-          <span className="text-lg font-bold tracking-tight text-emerald-400">Waka School</span>
-          <nav className="flex flex-wrap items-center gap-2 text-sm">
+        <div className="mx-auto flex max-w-5xl flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <BrandLogoLockup tone="dark" layout="stack" className="max-w-md" />
+            <div className="mt-3 flex items-center gap-2">
+              <span className="h-px w-6 shrink-0 rounded bg-orange-500 opacity-70" />
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                Smarter Schools, Brighter Futures
+              </p>
+              <span className="h-px w-6 shrink-0 rounded bg-orange-500 opacity-70" />
+            </div>
+            <p className="mt-1 text-xs text-slate-500">One Platform. Every School. Endless Possibilities.</p>
+          </div>
+          <nav className="flex flex-wrap items-center gap-2 text-sm lg:pt-1">
             <a
               href={appLoginUrl()}
               className="rounded-md border border-slate-600 px-3 py-2 text-slate-200 hover:bg-slate-800"
@@ -38,7 +49,7 @@ export function MarketingLandingPage() {
             </a>
             <a
               href={portalLoginUrl()}
-              className="rounded-md border border-emerald-700/60 bg-emerald-900/30 px-3 py-2 text-emerald-100 hover:bg-emerald-900/50"
+              className="rounded-md border border-orange-600/50 bg-orange-950/40 px-3 py-2 text-orange-100 hover:bg-orange-950/70"
             >
               Parent portal
             </a>
@@ -47,13 +58,13 @@ export function MarketingLandingPage() {
       </header>
 
       <main className="mx-auto max-w-5xl px-4 py-16 md:py-24">
-        <p className="text-sm font-medium uppercase tracking-widest text-emerald-400/90">Uganda-ready school software</p>
+        <p className="text-sm font-medium uppercase tracking-widest text-orange-400/90">Uganda-ready school software</p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-5xl">Run your school like an institution.</h1>
         <p className="mt-6 max-w-2xl text-lg text-slate-300">{DESCRIPTION}</p>
         <div className="mt-10 flex flex-wrap gap-3">
           <a
             href={appSignupUrl()}
-            className="rounded-lg bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-900/40 hover:bg-emerald-400"
+            className="rounded-lg bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-900/40 hover:bg-orange-400"
           >
             Start with the ERP
           </a>
@@ -70,11 +81,11 @@ export function MarketingLandingPage() {
 
       <footer className="border-t border-slate-800 px-4 py-8 text-center text-xs text-slate-500">
         © {new Date().getFullYear()} Waka School ·{' '}
-        <a href={appLoginUrl()} className="text-emerald-600 hover:underline">
+        <a href={appLoginUrl()} className="text-orange-400 hover:underline">
           app
         </a>
         {' · '}
-        <a href={portalLoginUrl()} className="text-emerald-600 hover:underline">
+        <a href={portalLoginUrl()} className="text-orange-400 hover:underline">
           portal
         </a>
       </footer>

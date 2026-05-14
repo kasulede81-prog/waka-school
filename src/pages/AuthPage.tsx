@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { BrandLogoLockup } from '../components/BrandLogo'
 import { useAuth } from '../lib/auth'
 import { isSupabaseConfigured } from '../lib/supabase'
 
@@ -56,7 +57,8 @@ export function AuthPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4 dark:bg-slate-950">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Waka School Login</h1>
+        <BrandLogoLockup layout="inline" className="mb-4" />
+        <h1 className="sr-only">Waka School Login</h1>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
           Email/password authentication with tenant-aware Supabase profiles.
         </p>

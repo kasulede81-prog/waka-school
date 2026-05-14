@@ -47,27 +47,56 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return
     }
 
-    supabase.auth.getSession().then(async ({ data }) => {
-      setSession(data.session)
-      if (data.session?.user) {
-        await loadProfile(data.session.user.id)
+    let cancelled = false
+    const loadingFailsafe = window.setTimeout(() => {
+      if (!cancelled) {
+        console.warn('Auth: session check exceeded time limit; continuing without session.')
+        setLoading(false)
       }
-      setLoading(false)
-    })
+    }, 12_000)
+
+    void (async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession()
+        if (cancelled) return
+        if (error) console.warn('Supabase getSession:', error.message)
+        setSession(data.session ?? null)
+        if (data.session?.user) {
+          try {
+            await loadProfile(data.session.user.id)
+          } catch (e) {
+            console.error('loadProfile failed:', e)
+          }
+        }
+      } catch (e) {
+        console.error('Auth session init failed:', e)
+      } finally {
+        window.clearTimeout(loadingFailsafe)
+        if (!cancelled) setLoading(false)
+      }
+    })()
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
       setSession(nextSession)
       if (nextSession?.user) {
-        await loadProfile(nextSession.user.id)
+        try {
+          await loadProfile(nextSession.user.id)
+        } catch (e) {
+          console.error('loadProfile (auth state):', e)
+        }
       } else {
         setProfile(null)
         setPermissions([])
       }
     })
 
-    return () => subscription.unsubscribe()
+    return () => {
+      cancelled = true
+      window.clearTimeout(loadingFailsafe)
+      subscription.unsubscribe()
+    }
   }, [])
 
   async function loadProfile(userId: string) {

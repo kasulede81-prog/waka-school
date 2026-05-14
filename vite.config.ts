@@ -20,7 +20,7 @@ export default defineConfig({
         name: 'Waka School',
         short_name: 'WakaSchool',
         description: 'Uganda-focused School ERP SaaS',
-        theme_color: '#047857',
+        theme_color: '#ea580c',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
